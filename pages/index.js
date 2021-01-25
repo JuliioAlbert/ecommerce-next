@@ -4,6 +4,7 @@ const Home = () => {
   return ( 
     <BasicLayout>
       <h1>Estamos en el Home</h1>
+      <h2>Hola</h2>
     </BasicLayout>
    );
 }
