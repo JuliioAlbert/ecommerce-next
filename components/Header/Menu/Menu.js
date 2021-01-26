@@ -1,7 +1,14 @@
+import {useState} from 'react';
+
 import {Container,Menu,Grid,Icon,Label} from "semantic-ui-react";
 import Link from 'next/link';
+import BasicModal from "../../Modal/BasicModal";
+
 
 const MenuD = () => {
+    const [showModal, setShowModal] = useState(false)
+
+    const onShowModal = () => setShowModal(true);
     return ( 
         <div className="menu">
             <Container>
@@ -10,10 +17,13 @@ const MenuD = () => {
                     <MenuPlatform/>
                     </Grid.Column>
                     <Grid.Column className="menu__right" width={10}>
-                        <MenuOption/>
+                        <MenuOption onShowModal={onShowModal} />
                     </Grid.Column>
                 </Grid>
             </Container>
+            <BasicModal show={showModal} setShow={setShowModal} title="Inicia Sesion" size="small">
+                <h2>Contenido del Modal</h2>
+            </BasicModal>
         </div>
      );
 }
@@ -39,11 +49,11 @@ function MenuPlatform(){
     )
 }
 
-function MenuOption(){
+function MenuOption({onShowModal}){
     return (
         <Menu>
 
-        <Menu.Item>
+        <Menu.Item onClick={onShowModal}>
             <Icon name="user outline" />
             Mi Cuenta
         </Menu.Item>
