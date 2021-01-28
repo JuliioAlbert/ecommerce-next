@@ -18,6 +18,7 @@ const RegistroForm = (props) => {
                 setLoading(true);
                 const response = await registrarUsuario(formData);
                 if(response?.jwt){
+                    toast.success('Registro Exitoso');
                     showLoginForm();
                 }else{
                     console.log('Error al Registrar el Usuario');
@@ -35,7 +36,7 @@ const RegistroForm = (props) => {
              <Form.Input name="email" type="text" placeholder="Correo Electronico" onChange={formik.handleChange} error={formik.errors.email} />
              <Form.Input name="password" type="password" placeholder="Contraseña" onChange={formik.handleChange} error={formik.errors.password}/>
              <div className="actions">
-                 <Button type="button" basic >
+                 <Button type="button" basic onClick={showLoginForm} >
                     Iniciar Sesion
                  </Button>
                  <Button type="submit" className="submit"  loading={loading}>
