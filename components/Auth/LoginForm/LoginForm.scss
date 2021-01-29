@@ -1,3 +1,15 @@
 .login-form{
-    .action{}
+    .action{
+        display: flex;
+        justify-content: space-between;
+
+
+        .ui.basic.button {
+            margin: 0;
+
+        }
+        .ui.button.submit{
+            margin-right: 10px !important;
+        }
+    }
 }
