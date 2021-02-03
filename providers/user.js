@@ -1,40 +1,60 @@
-import {ULR} from '../utils/contants';
-export const registrarUsuario= async (data) =>{
-   try {
-        const url= `${ULR}/auth/local/register`;
-        const params={
-            method:'POST',
-            headers:{
+import { ULR } from '../utils/contants';
+export const registrarUsuario = async (data) => {
+    try {
+        const url = `${ULR}/auth/local/register`;
+        const params = {
+            method: 'POST',
+            headers: {
                 'Content-Type': "application/json"
             },
-            body:JSON.stringify(data),
+            body: JSON.stringify(data),
         }
-        const res =await fetch(url, params);
+        const res = await fetch(url, params);
         const result = await res.json();
         return result;
-   } catch (error) {
-    console.log(error);
-    return null;
-   }
+    } catch (error) {
+        console.log(error);
+        return null;
+    }
 
 }
 
-export const loginAuth =async (data) =>{
+export const loginAuth = async (data) => {
     try {
-        const url= `${URL}/auth/local`;
-        const params ={
+        const url = `${URL}/auth/local`;
+        const params = {
             method: "POST",
-            headers:{
+            headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(data)
         }
-        const response = await fetch(url,params);
+        const response = await fetch(url, params);
         const result = await response.json();
         console.log(result);
 
     } catch (error) {
         console.log(error)
+        return null;
+    }
+}
+
+export const resetPassword = async (email) => {
+    try {
+        const url = `${URL}/auth/forgot-password`;
+        const params = {
+            method: 'POST',
+            headers: {
+                "Content-Type": "applicacion/json",
+
+            },
+            body: JSON.stringify({ email })
+        }
+        const response = await fetch(url, params);
+        const result = await response.json(response)
+        return result;
+    } catch (error) {
+        console.log(error);
         return null;
     }
 }
