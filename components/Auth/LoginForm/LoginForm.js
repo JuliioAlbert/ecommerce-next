@@ -11,7 +11,7 @@ const LoginForm = (props) => {
     const {showRegistroForm,onCloseModal } = props;
     const [loading, setLoading] = useState(false);
     const {login} = useAuth();
-    console.log(auth);
+   
 
 
     const formik = useFormik({
