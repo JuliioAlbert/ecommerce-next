@@ -3,10 +3,16 @@ import {Form, Button } from 'semantic-ui-react';
 import {useFormik} from 'formik';
 import * as Yup from 'yup';
 import {toast} from 'react-toastify';
+
 import {loginAuth } from '../../../providers/user';
+import useAuth from '../../../hooks/useAuth';
+
 const LoginForm = (props) => {
     const {showRegistroForm,onCloseModal } = props;
     const [loading, setLoading] = useState(false);
+    const {login} = useAuth();
+    console.log(auth);
+
 
     const formik = useFormik({
         initialValues:initialValues(),
@@ -16,7 +22,7 @@ const LoginForm = (props) => {
             const response = await loginAuth(data);
             console.log(response);
             if(response?.jwt){
-                console.log('OK')
+                login(response.jwt);
                 onCloseModal();
             }else{
                 toast.error('Son Incorrectos')
