@@ -1,4 +1,6 @@
 import { ULR } from '../utils/contants';
+import { authFecth } from '../utils/fetch';
+
 export const registrarUsuario = async (data) => {
     try {
         const url = `${ULR}/auth/local/register`;
@@ -57,4 +59,14 @@ export const resetPassword = async (email) => {
         console.log(error);
         return null;
     }
+}
+export const getMeApi = async (logout) => {
+    try {
+        const url =`${ULR}/user/me`;
+        const result = await authFecth(url, null,logout);
+        return result? result : null;
+    } catch (error) {
+        return null
+    }
+
 }
