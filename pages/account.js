@@ -3,6 +3,7 @@ import BasicLayout from '../layouts/BasicLayout';
 import { useRouter } from 'next/router';
 import useAuth from '../hooks/useAuth';
 import { getMeApi } from '../providers/user';
+import ChangeNameForm from '../components/Account/ChangeNameForm';
 
 
 const Account = () => {
@@ -16,7 +17,7 @@ const Account = () => {
         (async () => {
             const responese = await getMeApi(logout);
             setUser(responese || null);
-        })()
+        })();
     }, [auth]);
 
     if (user === undefined) return null;
@@ -26,9 +27,18 @@ const Account = () => {
     }
     return (
         <BasicLayout className="account">
-            <h1>Estamos en mi Cuenta</h1>
+            <Configuration user={user} />
+            
         </BasicLayout>
     );
 }
-
 export default Account;
+
+const Configuration = ({user}) => {
+    return (
+        <div className="account__configuration">
+            <div className="title">Configuracion</div>
+            <div className="data"><ChangeNameForm user={user}/> </div>
+        </div>
+    );
+}
