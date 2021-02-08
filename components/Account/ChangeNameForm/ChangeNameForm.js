@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 import {toast} from 'react-toastify';
 import {updateNameApi} from '../../../providers/user';
 
-const ChangeNameForm = (/*{user, logout} */) => {
+const ChangeNameForm = (/*{user, logout, setReloadUser} */) => {
     const user = {
         nombre:'julio',
         apellido:'Gonzalez'
@@ -28,8 +28,10 @@ const ChangeNameForm = (/*{user, logout} */) => {
                 toast.error('Error al actualizar el nombre y apellidos');
             }else{
                 console.log('Nombre Actualizado');
-                setLoading(false);
+                //setReloadUser(true);
+                toast.success("Nombre y Apellido Actualizados");
             }
+            setLoading(false);
         }
     });
 

@@ -4,12 +4,12 @@ import { useRouter } from 'next/router';
 import useAuth from '../hooks/useAuth';
 import { getMeApi } from '../providers/user';
 import ChangeNameForm from '../components/Account/ChangeNameForm';
-
+import ChangeEmailForm from '../components/Account/ChangeEmailForm/ChangeEmailForm';
 
 const Account = () => {
 
     const [user, setUser] = useState(undefined);
-    const { auth, logout } = useAuth();
+    const { auth, logout,setReloadUser } = useAuth();
 
 
     const router = useRouter();
@@ -27,18 +27,19 @@ const Account = () => {
     }
     return (
         <BasicLayout className="account">
-            <Configuration user={user} logout={logout} />
+            <Configuration user={user} logout={logout} setReloadUser={setReloadUser}/>
             
         </BasicLayout>
     );
 }
 export default Account;
 
-const Configuration = ({user, logout}) => {
+const Configuration = ({user, logout,setReloadUser}) => {
     return (
         <div className="account__configuration">
             <div className="title">Configuracion</div>
-            <div className="data"><ChangeNameForm user={user} logout={logout}/> </div>
+            <div className="data"><ChangeNameForm user={user} logout={logout} setReloadUser={setReloadUser}/> </div>
+            <ChangeEmailForm user={user} logout={logout} setReloadUser={setReloadUser} />
         </div>
     );
 }
