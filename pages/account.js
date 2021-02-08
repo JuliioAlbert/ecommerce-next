@@ -27,18 +27,18 @@ const Account = () => {
     }
     return (
         <BasicLayout className="account">
-            <Configuration user={user} />
+            <Configuration user={user} logout={logout} />
             
         </BasicLayout>
     );
 }
 export default Account;
 
-const Configuration = ({user}) => {
+const Configuration = ({user, logout}) => {
     return (
         <div className="account__configuration">
             <div className="title">Configuracion</div>
-            <div className="data"><ChangeNameForm user={user}/> </div>
+            <div className="data"><ChangeNameForm user={user} logout={logout}/> </div>
         </div>
     );
 }
