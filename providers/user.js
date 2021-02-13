@@ -62,22 +62,22 @@ export const resetPassword = async (email) => {
 }
 export const getMeApi = async (logout) => {
     try {
-        const url =`${ULR}/user/me`;
-        const result = await authFecth(url, null,logout);
-        return result? result : null;
+        const url = `${ULR}/user/me`;
+        const result = await authFecth(url, null, logout);
+        return result ? result : null;
     } catch (error) {
         return null
     }
 
 }
 
-export const updateNameApi = async (idUser, data, logout) =>{
+export const updateNameApi = async (idUser, data, logout) => {
     try {
         const url = `${ULR}/users/${idUser}`;
         const params = {
             method: 'PUT',
             headers: {
-                "Content-Type" : "application/json"
+                "Content-Type": "application/json"
             },
             body: JSON.stringify(data)
         }
@@ -90,4 +90,41 @@ export const updateNameApi = async (idUser, data, logout) =>{
 
     }
 
+}
+
+export const updateEmailApi = async (idUser, email, logout) => {
+    try {
+        const url = `${URL}/users/${idUser}`;
+        const params = {
+            method: 'PUT',
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email })
+        }
+        const result = await authFecth(url, params, logout);
+        return result ? result : null;
+    } catch (error) {
+        console.log(error);
+        return null;
+    }
+}
+
+export const updatePasswordApi = async(idUser, password, logout) => {
+    try {
+        const url = `${URL}/users/${idUser}`;
+        const params= {
+            method:'PUT',
+            headers: {
+                "Content-Type" : "application/json",
+            },
+            body: JSON.stringify({password})
+        }
+        const response = await authFecth(url, params,logout);
+        return response ? response :  null;
+        
+    } catch (error) {
+        console.log(error);
+        return null;
+    }
 }
