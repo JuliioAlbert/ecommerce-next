@@ -8,6 +8,12 @@ import ChangeNameForm from '../components/Account/ChangeNameForm';
 import ChangeEmailForm from '../components/Account/ChangeEmailForm';
 import ChangePasswordForm from '../components/Account/ChangePasswordForm';
 import BasicModal from '../components/Modal/BasicModal';
+import AdressForm from '../components/Account/AdressForm';
+import ListDirecciones from '../components/Account/ListDirecciones';
+
+
+
+
 const Account = () => {
 
     const [user, setUser] = useState(undefined);
@@ -78,7 +84,7 @@ const Direcciones = () => {
     const openModal = (title) => {
         setTitleModal(title);
         setFormModal(
-            (<h1>Nueva Direccion</h1>)
+            (<AdressForm setShowModal/>)
         )
         setShowModal(true);
     }
@@ -89,14 +95,14 @@ const Direcciones = () => {
                 <Icon name="plus" link onClick={() => openModal("Nueva Direccion")} />
             </div>
             <div className="data">
-                <p>Lista de Direcciones</p>
+                <ListDirecciones/>
             </div>
             <BasicModal
                 show={showModal}
                 setShow={setShowModal}
                 title={titleModal}>
 
-                <p>Formulario Add -Update</p>
+                {formModal}
             </BasicModal>
         </div>
     )
