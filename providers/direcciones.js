@@ -52,3 +52,21 @@ export const eliminarDirecciones = async (idAddress, logout) => {
         return error;
     }
 }
+
+export const updateDireccion = async (idAddress, address, logout) => {
+    try {
+        const url = `${URL}/addresses/${idAddress}`;
+        const params={
+            method:"PUT",
+            headers:{
+                "Content-Type" : "application/json"
+            },
+            body: JSON.stringify(address),
+        };
+        const result = await authFecth(url, params, logout);
+        return result;
+    } catch (error) {
+        console.log(error);
+        return null;
+    }
+}

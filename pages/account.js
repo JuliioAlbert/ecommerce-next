@@ -83,10 +83,17 @@ const Direcciones = () => {
 
 
 
-    const openModal = (title) => {
+    const openModal = (title, direccion) => {
         setTitleModal(title);
         setFormModal(
-            (<AdressForm setShowModal={setShowModal} setReloadDireccion = {setReloadDireccion}/>)
+            (
+            <AdressForm 
+                setShowModal={setShowModal} 
+                setReloadDireccion ={setReloadDireccion}
+                newAddress={direccion ? false : true}
+                direccion = {address || null}
+            />
+            )
         )
         setShowModal(true);
     }
@@ -97,7 +104,11 @@ const Direcciones = () => {
                 <Icon name="plus" link onClick={() => openModal("Nueva Direccion")} />
             </div>
             <div className="data">
-                <ListDirecciones reloadDireccion={reloadDireccion} setReloadDireccion={setReloadDireccion}/>
+                <ListDirecciones 
+                    reloadDireccion={reloadDireccion} 
+                    setReloadDireccion={setReloadDireccion}
+                    openModal={openModal}
+                    />
             </div>
             <BasicModal
                 show={showModal}

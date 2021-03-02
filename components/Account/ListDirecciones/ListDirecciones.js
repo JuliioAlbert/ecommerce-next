@@ -3,7 +3,7 @@ import { Grid, Button } from 'semantic-ui-react';
 import { map, size } from 'lodash';
 import { listaDirecciones, eliminarDirecciones } from '../../../providers/direcciones';
 import UseAuth from '../../../hooks/useAuth';
-const ListDirecciones = ({reloadDireccion,setReloadDireccion}) => {
+const ListDirecciones = ({reloadDireccion,setReloadDireccion, openModal}) => {
     const [direcciones, setDirecciones] = useState(null);
     const { auth, logout } = UseAuth();
    
@@ -25,7 +25,12 @@ const ListDirecciones = ({reloadDireccion,setReloadDireccion}) => {
                     <Grid>
                         {map(direcciones, (direccion) => (
                             <Grid.Column key={direccion.id} mobile={16} tablet={8} computer={4}>
-                                <Direccion direccion={direccion} logout={logout} setReloadDireccion={setReloadDireccion} />
+                                <Direccion 
+                                    direccion={direccion} 
+                                    logout={logout} 
+                                    setReloadDireccion={setReloadDireccion} 
+                                    openModal={openModal}
+                                    />
                             </Grid.Column>
                         ))}
                     </Grid>
@@ -37,7 +42,7 @@ const ListDirecciones = ({reloadDireccion,setReloadDireccion}) => {
 
 export default ListDirecciones;
 
-const Direccion = ({ direccion,logout, setReloadDireccion }) => {
+const Direccion = ({ direccion,logout, setReloadDireccion, openModal }) => {
     const [loadingDelete, setLoadingDelete] = useState(false);
 
 
@@ -58,7 +63,11 @@ const Direccion = ({ direccion,logout, setReloadDireccion }) => {
             <p>Direccion</p>
             <p>Direccion</p>
             <div className="actions">
-                <Button primary>Editar</Button>
+                <Button 
+                    primary 
+                    onClick={() =>openModal(`Editar: ${direccion.title}`, direccion)}
+                    >Editar
+                </Button>
                 <Button onClick={eliminarDirecciones} loading={loadingDelete} >Eliminar</Button>
             </div>
         </div>

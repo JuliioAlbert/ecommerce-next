@@ -1,15 +1,19 @@
 import { useState, useEffect } from 'react';
-import { Container, Menu, Grid, Icon, Label } from "semantic-ui-react";
+import { Container, Menu, Grid, Icon } from "semantic-ui-react";
 import Link from 'next/link';
 import BasicModal from "../../Modal/BasicModal";
 import Auth from '../../Auth';
 import useAuth from '../../../hooks/useAuth';
 import { getMeApi } from '../../../providers/user';
+import { getPlatform } from '../../../providers/platform';
+import {map} from 'lodash';
+
 const MenuD = () => {
     const [showModal, setShowModal] = useState(false)
     const [titleModal, setTitleModal] = useState("");
     const { auth, logout } = useAuth();
     const [user, setUser] = useState(undefined);
+    const [platform, setPlatform] = useState([]);
 
     useEffect(() => {
         (async () => {
@@ -19,6 +23,13 @@ const MenuD = () => {
             setUser(response);
         })()
     }, [auth]);
+
+    useEffect(() => {
+       (async () => {
+           const response = await getPlatform();
+           setPlatform(response || []);
+       })()
+    }, [])
 
 
 
@@ -30,7 +41,7 @@ const MenuD = () => {
             <Container>
                 <Grid>
                     <Grid.Column className="menu__left" width={6}>
-                        <MenuPlatform />
+                        <MenuPlatform platform={platform}/>
                     </Grid.Column>
                     <Grid.Column className="menu__right" width={10}>
                         {/* {auth ? (
@@ -58,21 +69,16 @@ const MenuD = () => {
 
 export default MenuD;
 
-const MenuPlatform = () => {
+const MenuPlatform = ({platform}) => {
     return (
         <Menu>
-            <Link href="/play-station">
-                <Menu.Item as="a">PS5 </Menu.Item>
-            </Link>
-            <Link href="/play-station">
-                <Menu.Item as="a">Xbox </Menu.Item>
-            </Link>
-            <Link href="/play-station">
-                <Menu.Item as="a">Switch </Menu.Item>
-            </Link>
-            <Link href="/play-station">
-                <Menu.Item as="a">PC </Menu.Item>
-            </Link>
+           {map(platform, (i) => (
+               <Link href={`/games/${i.url}`} key={i._id}>
+                   <Menu.Item as="a" name={i.url}>
+                       {i.title}
+                   </Menu.Item>
+               </Link>
+           ))}
         </Menu>
     )
 }

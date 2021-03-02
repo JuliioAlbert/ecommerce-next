@@ -3,20 +3,22 @@ import { Form, Button } from 'semantic-ui-react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import useAuth from '../../../hooks/useAuth';
-import { crearDireccionApi } from '../../../providers/direcciones';
+import { crearDireccionApi, updateDireccion } from '../../../providers/direcciones';
 import { toast } from 'react-toastify';
 
 
-const AdressForm = ({ setShowModal, setReloadDireccion }) => {
+const AdressForm = ({ setShowModal, setReloadDireccion, newAddress, direccion }) => {
     const [loading, setLoading] = useState(false);
     const { auth, logout } = useAuth();
 
 
     const formik = useFormik({
-        initialValues: initialValues(),
+        initialValues: initialValues(direccion),
         validationSchema: Yup.object(validationSchema()),
         onSubmit: (datos) => {
-            crearDireccion(datos);
+            newAddress
+                ? crearDireccion(datos)
+                : updateDireccion(datos);
         }
     })
 
@@ -38,6 +40,24 @@ const AdressForm = ({ setShowModal, setReloadDireccion }) => {
         }
 
 
+    }
+
+    const updateDireccion = async (datos) => {
+        setLoading(true);
+        const formDataTemp = {
+            ...datos,
+            user: auth.idUser
+        };
+        const response = updateDireccion(direccion._id, formDataTemp);
+        if (!response) {
+            toast.warning('Error al Actualizar la direccion');
+            setLoading(false);
+        } else {
+            formik.resetForm(),
+                setReloadDireccion(true);
+            setLoading(false);
+            setShowModal(false);
+        }
     }
     return (
         <Form onSubmit={formik.handleSubmit}>
@@ -114,6 +134,7 @@ const AdressForm = ({ setShowModal, setReloadDireccion }) => {
             <div className="actions">
                 <Button className="submit" type="submit" loading={loading} >
                     Crear Direccion
+                    {newAddress ? "Crear Direccion" : "Actualizar Direccion"}
                 </Button>
             </div>
         </Form>
@@ -122,15 +143,15 @@ const AdressForm = ({ setShowModal, setReloadDireccion }) => {
 
 export default AdressForm;
 
-const initialValues = () => {
+const initialValues = (direccion) => {
     return {
-        titulo: "",
-        nombre: "",
-        direccion: "",
-        ciudad: "",
-        estado: "",
-        postal: "",
-        telefono: "",
+        titulo: direccion?.titulo || "",
+        nombre: direccion?.nombre || "",
+        direccion: direccion?.direccion || "",
+        ciudad: direccion?.ciudad || "",
+        estado: direccion?.estado || "",
+        postal: direccion?.postal || "",
+        telefono: direccion?.telefono || "",
     }
 }
 
