@@ -79,12 +79,14 @@ const Direcciones = () => {
     const [showModal, setShowModal] = useState(false);
     const [titleModal, setTitleModal] = useState('');
     const [formModal, setFormModal] = useState(null);
+    const [reloadDireccion, setReloadDireccion] = useState(false);
+
 
 
     const openModal = (title) => {
         setTitleModal(title);
         setFormModal(
-            (<AdressForm setShowModal/>)
+            (<AdressForm setShowModal={setShowModal} setReloadDireccion = {setReloadDireccion}/>)
         )
         setShowModal(true);
     }
@@ -95,7 +97,7 @@ const Direcciones = () => {
                 <Icon name="plus" link onClick={() => openModal("Nueva Direccion")} />
             </div>
             <div className="data">
-                <ListDirecciones/>
+                <ListDirecciones reloadDireccion={reloadDireccion} setReloadDireccion={setReloadDireccion}/>
             </div>
             <BasicModal
                 show={showModal}

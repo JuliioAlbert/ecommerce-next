@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Grid, Button } from 'semantic-ui-react';
 import { map, size } from 'lodash';
-import { listaDirecciones } from '../../../providers/direcciones';
+import { listaDirecciones, eliminarDirecciones } from '../../../providers/direcciones';
 import UseAuth from '../../../hooks/useAuth';
-const ListDirecciones = () => {
+const ListDirecciones = ({reloadDireccion,setReloadDireccion}) => {
     const [direcciones, setDirecciones] = useState(null);
     const { auth, logout } = UseAuth();
    
@@ -11,9 +11,10 @@ const ListDirecciones = () => {
 
         (async () => {
              const response = await listaDirecciones(auth.idUser, logout);
-            setDirecciones(response || [])
+            setDirecciones(response || []);
+            setReloadDireccion(false);
         })()
-    }, [])
+    }, [reloadDireccion])
     if(!direcciones)return null;
 
     return (
@@ -24,7 +25,7 @@ const ListDirecciones = () => {
                     <Grid>
                         {map(direcciones, (direccion) => (
                             <Grid.Column key={direccion.id} mobile={16} tablet={8} computer={4}>
-                                <Direccion direccion={direccion} />
+                                <Direccion direccion={direccion} logout={logout} setReloadDireccion={setReloadDireccion} />
                             </Grid.Column>
                         ))}
                     </Grid>
@@ -36,8 +37,18 @@ const ListDirecciones = () => {
 
 export default ListDirecciones;
 
-const Direccion = ({ direccion }) => {
-    //const {} = direccion;
+const Direccion = ({ direccion,logout, setReloadDireccion }) => {
+    const [loadingDelete, setLoadingDelete] = useState(false);
+
+
+    const eliminarDirecciones = async() => {
+        setLoadingDelete(true);
+        const response = await eliminarDirecciones(direccion._id, logout);
+        if(response) setReloadDireccion(true);
+        setLoadingDelete(false);
+    }
+
+
     return (
         <div className="address">
             <p>Direccion</p>
@@ -48,7 +59,7 @@ const Direccion = ({ direccion }) => {
             <p>Direccion</p>
             <div className="actions">
                 <Button primary>Editar</Button>
-                <Button >Eliminar</Button>
+                <Button onClick={eliminarDirecciones} loading={loadingDelete} >Eliminar</Button>
             </div>
         </div>
     )

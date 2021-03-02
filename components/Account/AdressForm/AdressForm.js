@@ -7,7 +7,7 @@ import { crearDireccionApi } from '../../../providers/direcciones';
 import { toast } from 'react-toastify';
 
 
-const AdressForm = ({ setShowModal }) => {
+const AdressForm = ({ setShowModal, setReloadDireccion }) => {
     const [loading, setLoading] = useState(false);
     const { auth, logout } = useAuth();
 
@@ -32,6 +32,7 @@ const AdressForm = ({ setShowModal }) => {
             setLoading(false);
         } else {
             formik.resetForm();
+            setReloadDireccion(true);
             setLoading(false);
             setShowModal(false);
         }

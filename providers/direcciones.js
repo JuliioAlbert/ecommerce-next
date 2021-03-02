@@ -33,3 +33,22 @@ export const listaDirecciones = async (idUser, logout) => {
 
     }
 }
+
+export const eliminarDirecciones = async (idAddress, logout) => {
+    try {
+        const url = `${ULR}/addresses/${idAddress}`;
+        const params={
+            method:'DELETE',
+            headers:{
+                "Content-Type" : 'application/json',
+            },
+        };
+        const result = await authFecth(url,params, logout);
+        if(result.statusCode === 500) throw 'Error del Servidor';
+        return true;
+
+    } catch (error) {
+        console.log(error);
+        return error;
+    }
+}
