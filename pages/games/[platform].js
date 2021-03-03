@@ -1,6 +1,7 @@
-import BasicLayout from '../../layouts/BasicLayout';
+import { useState,useEffect } from 'react';
 import { useRouter } from 'next/router';
-
+import BasicLayout from '../../layouts/BasicLayout';
+import {getGamesPlatform} from '../../providers/game';
 const Platform = () => {
     const { query } = useRouter();
     console.log(router);
