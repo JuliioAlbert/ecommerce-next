@@ -1,6 +1,6 @@
 import { ULR } from '../utils/contants';
  
-export const getGamesNuevos = (limit) => {
+export const getGamesNuevos = async (limit) => {
     try {
         const limitItems = `_limit=${limit}`;
         const sortItems = `_sort=createA:desc`;
