@@ -8,7 +8,7 @@ import ListGames from '../../components/ListGames';
 import Pagination from '../../components/Pagination';
 
 
-const limitPorPage = 10;
+const limitPorPage = 20;
 
 
 const Platform = () => {
